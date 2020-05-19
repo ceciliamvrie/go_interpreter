@@ -1,27 +1,26 @@
-// token/token.go
-
 package token
 
 type TokenType string
+
 type Token struct {
-	Type	TokenType
-	Literal	string
+	Type    TokenType
+	Literal string
 }
 
 const (
 	ILLEGAL = "ILLEGAL" // unknown tokens
-	EOF = "EOF" // end of file
-	
+	EOF     = "EOF"     // end of file
+
 	// IDENTIFIERS AND LITERALS
 	IDENT = "IDENT" // variable names, function names
-	INT = "INT" // integers
+	INT   = "INT"   // integers
 
 	// OPERATORS
 	ASSIGN = "="
-	PLUS = "+"
-	
+	PLUS   = "+"
+
 	// DELIMITERS
-	COMMA = ","
+	COMMA     = ","
 	SEMICOLON = ";"
 
 	LPAREN = "("
@@ -31,5 +30,5 @@ const (
 
 	// KEYWORDS
 	FUNCTION = "FUNCTION"
-	LET = "LET"
+	LET      = "LET"
 )
