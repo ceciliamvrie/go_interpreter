@@ -42,7 +42,7 @@ func TestKeywordsAndIdentifiers(t *testing.T) {
 	input := `
 		let five = 5;
 
-		let add = func(x, y) {
+		let add = fn(x, y) {
 			x + y;
 		};
 	`
@@ -54,12 +54,12 @@ func TestKeywordsAndIdentifiers(t *testing.T) {
 		{token.LET, "let"},
 		{token.IDENT, "five"},
 		{token.ASSIGN, "="},
-		{token.INT, 5},
+		{token.INT, "5"},
 		{token.SEMICOLON, ";"},
 		{token.LET, "let"},
 		{token.IDENT, "add"},
 		{token.ASSIGN, "="},
-		{token.FUNC, "func"},
+		{token.FUNCTION, "fn"},
 		{token.LPAREN, "("},
 		{token.IDENT, "x"},
 		{token.COMMA, ","},
@@ -69,6 +69,7 @@ func TestKeywordsAndIdentifiers(t *testing.T) {
 		{token.IDENT, "x"},
 		{token.PLUS, "+"},
 		{token.IDENT, "y"},
+		{token.SEMICOLON, ";"},
 		{token.RBRACE, "}"},
 		{token.SEMICOLON, ";"},
 		{token.EOF, ""},
