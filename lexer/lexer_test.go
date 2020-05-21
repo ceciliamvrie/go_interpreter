@@ -7,7 +7,7 @@ import (
 )
 
 func TestOperatorsAndDelimiters(t *testing.T) {
-	input := `=+(){},;`
+	input := `=+(){},;!/*<>==!=`
 
 	tests := []struct {
 		expectedType    token.TokenType
@@ -21,6 +21,13 @@ func TestOperatorsAndDelimiters(t *testing.T) {
 		{token.RBRACE, "}"},
 		{token.COMMA, ","},
 		{token.SEMICOLON, ";"},
+		{token.BANG, "!"},
+		{token.SLASH, "/"},
+		{token.ASTERISK, "*"},
+		{token.LT, "<"},
+		{token.GT, ">"},
+		{token.EQ, "=="},
+		{token.NOT_EQ, "!="},
 		{token.EOF, ""},
 	}
 
@@ -45,6 +52,13 @@ func TestKeywordsAndIdentifiers(t *testing.T) {
 		let add = fn(x, y) {
 			x + y;
 		};
+
+		if (5 < 1000) {
+			return true;
+		} else {
+			return false;
+		}
+		5 != 10 55==55
 	`
 
 	tests := []struct {
@@ -72,6 +86,29 @@ func TestKeywordsAndIdentifiers(t *testing.T) {
 		{token.SEMICOLON, ";"},
 		{token.RBRACE, "}"},
 		{token.SEMICOLON, ";"},
+		{token.IF, "if"},
+		{token.LPAREN, "("},
+		{token.INT, "5"},
+		{token.LT, "<"},
+		{token.INT, "1000"},
+		{token.RPAREN, ")"},
+		{token.LBRACE, "{"},
+		{token.RETURN, "return"},
+		{token.TRUE, "true"},
+		{token.SEMICOLON, ";"},
+		{token.RBRACE, "}"},
+		{token.ELSE, "else"},
+		{token.LBRACE, "{"},
+		{token.RETURN, "return"},
+		{token.FALSE, "false"},
+		{token.SEMICOLON, ";"},
+		{token.RBRACE, "}"},
+		{token.INT, "5"},
+		{token.NOT_EQ, "!="},
+		{token.INT, "10"},
+		{token.INT, "55"},
+		{token.EQ, "=="},
+		{token.INT, "55"},
 		{token.EOF, ""},
 	}
 
