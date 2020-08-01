@@ -8,11 +8,75 @@ import (
 	"fmt"
 )
 
+func TestBooleanParsing(t *testing.T) {
+	tests := []struct {
+		input string
+		expected string
+	} {
+		{
+			"true;",
+			"true",
+		},
+		{
+			"false;",
+			"false",
+		},
+	}
+
+	for _, tt := range tests {
+		l := lexer.NewInput(tt.input)
+		p := parser.New(l)
+		program := p.ParseProgram()
+		checkParserErrors(t, p)
+
+		actual := program.String()
+		if actual != tt.expected {
+			t.Errorf("expected=%q, got=%s", tt.expected, actual)
+		}
+	}
+}
+
 func TestOperatorPrecedenceParsing(t *testing.T) {
 	tests := []struct {
 		input string
 		expected string
 	} {
+		{
+			"1 + (2 + 3) + 4",
+			"((1+(2+3))+4)",
+		},
+		{
+			"(5+5)*2",
+			"((5+5)*2)",
+		},
+		{
+			"2 / (5 + 5)",
+			"(2/(5+5))",
+		},
+		{
+			"-(5 + 5)",
+			"(-(5+5))",
+		},
+		{
+			"!(true == true)",
+			"(!(true==true))",
+		},
+		{
+			"true",
+			"true",
+		},
+		{
+			"false",
+			"false",
+		},
+		{
+			"3 > 5 == false",
+			"((3>5)==false)",
+		},
+		{
+			"3 < 5 == true",
+			"((3<5)==true)",
+		},
 		{
 			"-a * b",
 			"((-a)*b)",
@@ -227,6 +291,8 @@ func TestLetStatements(t *testing.T) {
 		let x = 5;
 		let y = 10;
 		let foobar = 838383;
+		let truthy = true;
+		let falsy = false;
 	`
 
 	l := lexer.NewInput(input)
@@ -238,7 +304,7 @@ func TestLetStatements(t *testing.T) {
 	if program == nil {
 		t.Fatalf("ParseProgram() returned nil")
 	}
-	if len(program.Statements) != 3 {
+	if len(program.Statements) != 5 {
 		t.Fatalf("program.Statements does not contain 3 statements. got=%d", len(program.Statements))
 	}
 
